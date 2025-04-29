@@ -10,15 +10,11 @@ function love.load()
 	numberOfLines = 144
 	circleCircumferenceInRad = 2*math.pi
 	arcLength = circleCircumferenceInRad/numberOfLines -- in Rads
-	incrementButton = {label = "UP", x = 10, y = 30, width = 100, height = 50}
-	decrementButton = {label = "DOWN", x = 10, y = 90, width = 100, height = 50}
+	decrementButton = {label = "DOWN", x = 10, y = 30, width = 100, height = 50}
 	exitButton = {label = "EXIT", x = 275, y = 30, width = 100, height = 50}
 end
 
 function love.draw()
-	-- Draw increment Button
-	love.graphics.setColor(0, 1, 0) -- green
-	love.graphics.rectangle("line", incrementButton.x, incrementButton.y, incrementButton.width, incrementButton.height)
 	-- Draw decrement Button
 	love.graphics.setColor(0, 0, 1) -- blue
 	love.graphics.rectangle("line", decrementButton.x, decrementButton.y, decrementButton.width, decrementButton.height)
@@ -27,7 +23,6 @@ function love.draw()
 	love.graphics.rectangle("line", exitButton.x, exitButton.y, exitButton.width, exitButton.height)
 	-- Draw button labels
 	love.graphics.setColor(1, 1, 1) -- white
-	love.graphics.printf(incrementButton.label, incrementButton.x, incrementButton.y + incrementButton.height / 3, incrementButton.width, "center")
 	love.graphics.printf(decrementButton.label, decrementButton.x, decrementButton.y + decrementButton.height / 3, decrementButton.width, "center")
 	love.graphics.printf(exitButton.label, exitButton.x, exitButton.y + exitButton.height / 3, exitButton.width, "center")
 	-- Draw Times Table
@@ -58,7 +53,7 @@ end
 
 function love.mousepressed(x, y, button, istouch, presses)
 	if istouch then 
-		if incrementButtonOnCLick(x, y) then
+		if decrementButtonOnCLick(x, y) == false and exitButtonOnCLick(x, y) == false then
 			timesTableNumber = timesTableNumber + 1
 		end
 		if decrementButtonOnCLick(x, y) and timesTableNumber > 2  then --stop from decrementing when it's less than 2 then
@@ -77,18 +72,12 @@ function love.resize(w, h)
   circleRadius = (w / 2) - 10 --offset so that there is a gap in between the circle and the screen
 end
 
-function incrementButtonOnCLick(x, y)
-	if x > incrementButton.x and x < (incrementButton.x + incrementButton.width) and
-	   y > incrementButton.y and y < (incrementButton.y + incrementButton.height) then
-		return true
-	end
-end
-
 function decrementButtonOnCLick(x, y)
 	if x > decrementButton.x and x < (decrementButton.x + decrementButton.width) and
 	   y > decrementButton.y and y < (decrementButton.y + decrementButton.height) then
 		return true
 	end
+	return false
 end
 
 function exitButtonOnCLick(x, y)
@@ -96,5 +85,6 @@ function exitButtonOnCLick(x, y)
 	   y > exitButton.y and y < (exitButton.y + exitButton.height) then
 		return true
 	end
+	return false
 end
 
